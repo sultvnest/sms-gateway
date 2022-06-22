@@ -5,6 +5,6 @@ export default class EmailController {
     if (email) {
       SendEmail(email, text, subject);
     }
-    return { statusCode: Ok, data: { Code: Ok, data: "SENT" } }
+    return { statusCode: Ok, data: { code: Ok, data: "SENT_EMAIL" } }
   }
 }
