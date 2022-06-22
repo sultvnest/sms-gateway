@@ -18,7 +18,7 @@ export function connectSMS() {
       },
       (pdu) => {
         if (pdu.command_status == 0) {
-          console.log("Successfully bound");
+          myLogger.info("Successfully bound");
         }
       }
     );
