@@ -1,5 +1,6 @@
 import { PortSMS, HostSMS, SystemID, PasswordSMS } from "../configs/config.js";
 import smpp from "smpp";
+import myLogger from "../configs/winston.js";
 const session = new smpp.Session({ host: HostSMS, port: PortSMS });
 export function connectSMS() {
   let isConnected = false;
@@ -24,14 +25,14 @@ export function connectSMS() {
   });
 
   session.on("close", () => {
-    console.log("smpp is now disconnected");
+    myLogger.info("smpp is now disconnected");
     if (isConnected) {
       session.connect(); //reconnect again
     }
   });
 
   session.on("error", (error) => {
-    console.log("smpp error", error);
+    myLogger.info("smpp error", error);
     isConnected = false;
   });
 }
@@ -49,7 +50,7 @@ export function sendSMS(from, to, text) {
     function (pdu) {
       if (pdu.command_status == 0) {
         // Message successfully sent
-        console.log(pdu.message_id);
+        myLogger.info(pdu.message_id);
       }
     }
   );
